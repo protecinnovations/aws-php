@@ -1,0 +1,45 @@
+<?php
+
+namespace \Amazon\Auth;
+use \Amazon\Interfaces\Credentials as ICredentials;
+
+class Credentials implements ICredentials
+{
+    protected $auth_key = null;
+    protected $secret = null;
+    
+    public function getAuthKey()
+    {
+        if (is_null($this->auth_key))
+        {
+            throw new \UnexpectedValueException('No Auth Key set');
+        }
+        
+        return $this->auth_key;
+    }
+    
+    public function getSecret()
+    {
+        if (is_null($this->secret))
+        {
+            throw new \UnexpectedValueException('No Secret set');
+        }
+        
+        return $this->secret;
+    }
+    
+    public function setAuthKey($key)
+    {
+        $this->auth_key = $key;
+        
+        return $this;
+    }
+    
+    public function setSecret($secret)
+    {
+        $this->secret = $key;
+        
+        return $this;
+    }
+    
+}
