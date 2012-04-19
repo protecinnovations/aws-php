@@ -1,6 +1,6 @@
 <?php
 
-namespace \Amazon\SES
+namespace \Amazon\SES;
 
 class Message
 {
@@ -251,40 +251,15 @@ class Message
             return false;
         }
         
-        if (is_null($this->subject) || empty($this->subject))
+        if (
+            (is_null($this->subject) || empty($this->subject))
+            || (is_null($this->message_text) || empty($this->message_text))
+            || (is_null($this->message_body) || empty($this->message_body))
+        )
         {
             return false;
         }
+        
+        return true;
     }
-}
-
-final class SimpleEmailServiceMessage {
-
-	/**
-	* Validates whether the message object has sufficient information to submit a request to SES.
-	* This does not guarantee the message will arrive, nor that the request will succeed;
-	* instead, it makes sure that no required fields are missing.
-	*
-	* This is used internally before attempting a SendEmail or SendRawEmail request,
-	* but it can be used outside of this file if verification is desired.
-	* May be useful if e.g. the data is being populated from a form; developers can generally
-	* use this function to verify completeness instead of writing custom logic.
-	*
-	* @return boolean
-	*/
-	public function validate() {
-		if(count($this->to) == 0)
-			return false;
-		if($this->from == null || strlen($this->from) == 0)
-			return false;
-		// messages require at least one of: subject, messagetext, messagehtml.
-		if(($this->subject == null || strlen($this->subject) == 0)
-			&& ($this->messagetext == null || strlen($this->messagetext) == 0)
-			&& ($this->messagehtml == null || strlen($this->messagehtml) == 0))
-		{
-			return false;
-		}
-
-		return true;
-	}
 }
