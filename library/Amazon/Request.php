@@ -152,7 +152,25 @@ class Request
 
     public function addParameter($key, $value)
     {
-        $this->params["$key"] = $value;
+        if (!isset($this->params["$key"]))
+        {
+            $this->params["$key"] = $value;
+        }
+        else
+        {
+            if (is_array($this->params["$key"]))
+            {
+                $parans["$key"][] = $value;
+            }
+            else
+            {
+                $old_value = $this->params["$key"];
+                $params["$key"] = array(
+                    $old_value,
+                    $value
+                );
+            }
+        }
     }
 
     public function setParameters($params)
@@ -164,5 +182,4 @@ class Request
     {
         return sprintf('http://%s/%s', $this->host, $this->path);
     }
-
 }

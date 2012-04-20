@@ -173,6 +173,11 @@ class Message
         return $this->return_path;
     }
 
+    public function hasReturnPath()
+    {
+        return (!is_null($this->return_path) && !is_empty($this->return_path));
+    }
+
     public function setSubject($subject)
     {
         $this->subject = $subject;
@@ -182,6 +187,11 @@ class Message
     public function getSubject()
     {
         return $this->subject;
+    }
+
+    public function hasSubject()
+    {
+        return (!is_null($this->subject) && !is_empty($this->subject));
     }
 
     public function setBodyText($body_text)
@@ -195,6 +205,11 @@ class Message
         return $this->body_text;
     }
 
+    public function hasBodyText()
+    {
+        return (!is_null($this->body_text) && !empty($this->body_text));
+    }
+
     public function setBodyHtml($body_html)
     {
         $this->body_html = $body_html;
@@ -204,6 +219,11 @@ class Message
     public function getBodyHtml()
     {
         return $this->body_html;
+    }
+
+    public function hasBodyHtml()
+    {
+        return (!is_null($this->body_html) && !empty($this->body_html));
     }
 
     public function setCharsetSubject($charset_subject)
@@ -251,11 +271,7 @@ class Message
             return false;
         }
 
-        if (
-            (is_null($this->subject) || empty($this->subject))
-            || (is_null($this->message_text) || empty($this->message_text))
-            || (is_null($this->message_body) || empty($this->message_body))
-        )
+        if (!$this->hasSubject() || !$this->hasBodyHtml() || !$this->hasBodyText())
         {
             return false;
         }

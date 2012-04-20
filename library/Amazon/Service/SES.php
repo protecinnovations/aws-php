@@ -128,6 +128,74 @@ class SES implements Interfaces\Authenticated
             throw new InvalidArgumentException('Message is not valid');
         }
 
+        $this->request->setMethod(\Amazon\Request::METHOD_POST);
+
+        $this->setTo($message->getTo());
+        $this->setCc($message->getCc());
+        $this->setBcc($message->getBcc());
+        $this->setReplyTo($message->getReplyTo());
+
+        $this->request->setParameter('Source', $message->getFrom());
+
+        if ($message->hasReturnPath())
+        {
+            $this->request->setParameter('ReturnPath', $message->getReturnPath());
+        }
+
+        if ($message->hasSubject())
+        {
+            $this->request->setParameter('Message.Subject.Data', $message->getSubjecT());
+            $this->request->setParameter('Message.Subject.Charset', $message->getCharsetSubject());
+        }
+
+        if ($message->hasBodyText())
+        {
+            $this->request->setParameter('Message.Body.Text.Data', $message->getBodyText());
+            $this->request->setParameter('Message.Body.Text.Charset', $message->getCharsetBodyText());
+        }
+
+        if ($message->hasBodyHtml())
+        {
+            $this->request->setParameter('Message.Body.Html.Data', $message->getBodyHtml());
+            $this->request->setParameter('Message.Body.Html.Charset', $message->getCharsetBodyHtml());
+        }
+
+        $response = $this->request->getResponse();
+
+        if ($response['info']['http_code'] != 200)
+        {
+            throw new RuntimeException('Unknown HTTP Response Code');
+        }
+
+        return $this;
+    }
+
+    protected function setTo($to)
+    {
+        $this->setMultiParam('Destination.ToAddresses.member', $to);
+    }
+
+    protected function setCc($cc)
+    {
+        $this->setMultiParam('Destination.CcAddresses.member', $cc);
+    }
+
+    protected function setBcc($bcc)
+    {
+        $this->setMultiParam('Destination.BccAddresses.member', $bcc);
+    }
+
+    protected function setReplyTo($reply_to)
+    {
+        $this->setMultiParam('ReplyToAddresses.member', $reply_to);
+    }
+
+    public function setMultiParam($param_prefix, $args)
+    {
+        $i = 1;
+        foreach ($args AS $arg)
+        {
+            $this->request->addParameter(sprintf('%s.%d', $param_prefix, $i), $arg);
+        }
     }
 }
-
