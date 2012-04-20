@@ -18,7 +18,7 @@ class Credentials implements ICredentials
         return $this->auth_key;
     }
     
-    public function getSecret()
+    protected function getSecret()
     {
         if (is_null($this->secret))
         {
@@ -40,6 +40,18 @@ class Credentials implements ICredentials
         $this->secret = $key;
         
         return $this;
+    }
+    
+    public function getAuthHeader($nonce)
+    {
+        $auth = sprintf('AWS3-HTTPS AWSAccessKeyId=%s,Alogorithm=HmacSHA256,Signature=%s', $this->getAuthKey(), $this->getSignature($nonce));
+		
+        return $auth;
+    }
+    
+    public function getSignature($nonce)
+    {
+        return base64_encode(hash_hmac('sha256', $to_sign, $this->getSecret(), true));
     }
     
 }

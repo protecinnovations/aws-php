@@ -159,7 +159,7 @@ class Message
     public function getFrom()
     {
         return $this->from;
-    )
+    }
     
     public function setReturnPath($return_path)
     {
