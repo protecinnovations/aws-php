@@ -9,7 +9,7 @@ class East1 extends \Amazon\Region\AbstractRegion implements Interfaces\Region
     {
         return true;
     }
-    
+
     public function getSESHost()
     {
         return 'email.us-east-1.amazonaws.com';
