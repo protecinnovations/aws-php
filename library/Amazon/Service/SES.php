@@ -16,8 +16,19 @@ class SES implements Interfaces\Authenticated
         $this->credentials = $credentials;
     }
 
-    public function __construct(\Amazon\Interfaces\Region $region, \Amazon\Interfaces\Credentials $credentials, \Amazon\Interfaces\SES\Request $request)
+    public function __construct(\Amazon\Interfaces\Credentials $credentials, \Amazon\Interfaces\SES\Request $request = null, \Amazon\Interfaces\Region $region = null)
     {
+        if (is_null($request))
+        {
+            $request = new \Amazon\SES\Request();
+        }
+
+        if (is_null($region))
+        {
+            $factory = new \Amazon\Region\Factory();
+            $region = $factory->getRegion('us-east-1');
+        }
+
         $this->authenticate($credentials);
         $this->region = $region;
         $this->request = $request;
