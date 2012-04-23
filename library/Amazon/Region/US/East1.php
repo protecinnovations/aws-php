@@ -1,6 +1,6 @@
 <?php
 
-namespace \Amazon\Region\US;
+namespace Amazon\Region\US;
 use \Amazon\Interfaces;
 
 class East1 extends \Amazon\Region\AbstractRegion implements Interfaces\Region

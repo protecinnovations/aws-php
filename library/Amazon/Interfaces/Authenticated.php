@@ -1,6 +1,6 @@
 <?php
 
-namespace \Amazon\Interfaces;
+namespace Amazon\Interfaces;
 
 interface Authenticated
 {

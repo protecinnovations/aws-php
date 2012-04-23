@@ -1,6 +1,6 @@
 <?php
 
-namespace \Amazon\Region;
+namespace Amazon\Region;
 
 class Factory
 {

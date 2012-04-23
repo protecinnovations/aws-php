@@ -1,6 +1,6 @@
 <?php
 
-namespace \Amazon;
+namespace Amazon;
 
 class Request
 {
@@ -72,12 +72,11 @@ class Request
     {
         if (is_null($this->action) || empty($this->action))
         {
-            throw new RuntimeException('No action set');
+            throw new \RuntimeException('No action set');
         }
 
         if (is_null($this->host) || empty($this->host))
         {
-            throw new RuntimeException('No host set');
         }
     }
 
@@ -86,6 +85,8 @@ class Request
         $this->checkValidity();
 
         $params = array();
+
+        $params[] = 'Action=' . $this->action;
 
         foreach ($this->params AS $key => $value)
         {
@@ -101,6 +102,7 @@ class Request
                 $params[] = sprintf('%s=%s', $key, $value);
             }
         }
+
         $date = gmdate('D, d M Y H:i:s e');
         $this->addHeader('Date', $date);
         $this->addHeader('Host', $this->host);
@@ -115,7 +117,7 @@ class Request
         switch ($this->method)
         {
             case self::METHOD_UNKNOWN:
-                throw new RuntimeException('No Method set');
+                throw new \RuntimeException('No Method set');
                 break;
             case self::METHOD_DELETE:
                 curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'DELETE');
@@ -128,7 +130,7 @@ class Request
                 $this->addHeader('Content-Type', 'application/x-www-form-urlencoded');
                 break;
             default:
-                throw new RuntimeException('Method not implemented');
+                throw new \RuntimeException('Method not implemented');
         }
 
         curl_setopt($curl, CURLOPT_HTTPHEADER, $this->headers);
@@ -136,6 +138,8 @@ class Request
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_URL, $this->getUrl());
         curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+
+        curl_setopt($curl, CURLINFO_HEADER_OUT, true);
 
         $return = curl_exec($curl);
 
@@ -180,6 +184,11 @@ class Request
 
     public function getUrl()
     {
-        return sprintf('http://%s/%s', $this->host, $this->path);
+        return sprintf('https://%s/%s', $this->host, $this->path);
+    }
+
+    public function setMethod($method)
+    {
+        $this->method = $method;
     }
 }

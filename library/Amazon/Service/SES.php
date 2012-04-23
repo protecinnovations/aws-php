@@ -64,7 +64,7 @@ class SES implements Interfaces\Authenticated
 
         if ($response['info']['http_code'] != 200)
         {
-            throw new RuntimeException('Unknown HTTP Response Code');
+            throw new \RuntimeException('Unknown HTTP Response Code');
         }
 
         return $this;
@@ -80,7 +80,7 @@ class SES implements Interfaces\Authenticated
 
         if ($response['info']['http_code'] != 200)
         {
-            throw new RuntimeException('Unknown HTTP Response Code');
+            throw new \RuntimeException('Unknown HTTP Response Code');
         }
 
         return $this;
@@ -95,7 +95,7 @@ class SES implements Interfaces\Authenticated
 
         if ($response['info']['http_code'] != 200)
         {
-            throw new RuntimeException('Unknown HTTP Response Code');
+            throw new \RuntimeException('Unknown HTTP Response Code');
         }
 
         $quotas = array(
@@ -116,7 +116,7 @@ class SES implements Interfaces\Authenticated
 
         if ($response['info']['http_code'] != 200)
         {
-            throw new RuntimeException('Unknown HTTP Response Code');
+            throw new \RuntimeException('Unknown HTTP Response Code');
         }
 
         $data_points = array();
@@ -136,46 +136,47 @@ class SES implements Interfaces\Authenticated
     {
         if (!$message->isValid())
         {
-            throw new InvalidArgumentException('Message is not valid');
+            throw new \InvalidArgumentException('Message is not valid');
         }
 
         $this->request->setMethod(\Amazon\Request::METHOD_POST);
+        $this->request->setAction('SendEmail');
 
         $this->setTo($message->getTo());
         $this->setCc($message->getCc());
         $this->setBcc($message->getBcc());
         $this->setReplyTo($message->getReplyTo());
 
-        $this->request->setParameter('Source', $message->getFrom());
+        $this->request->addParameter('Source', $message->getFrom());
 
         if ($message->hasReturnPath())
         {
-            $this->request->setParameter('ReturnPath', $message->getReturnPath());
+            $this->request->addParameter('ReturnPath', $message->getReturnPath());
         }
 
         if ($message->hasSubject())
         {
-            $this->request->setParameter('Message.Subject.Data', $message->getSubjecT());
-            $this->request->setParameter('Message.Subject.Charset', $message->getCharsetSubject());
+            $this->request->addParameter('Message.Subject.Data', $message->getSubjecT());
+            $this->request->addParameter('Message.Subject.Charset', $message->getCharsetSubject());
         }
 
         if ($message->hasBodyText())
         {
-            $this->request->setParameter('Message.Body.Text.Data', $message->getBodyText());
-            $this->request->setParameter('Message.Body.Text.Charset', $message->getCharsetBodyText());
+            $this->request->addParameter('Message.Body.Text.Data', $message->getBodyText());
+            $this->request->addParameter('Message.Body.Text.Charset', $message->getCharsetBodyText());
         }
 
         if ($message->hasBodyHtml())
         {
-            $this->request->setParameter('Message.Body.Html.Data', $message->getBodyHtml());
-            $this->request->setParameter('Message.Body.Html.Charset', $message->getCharsetBodyHtml());
+            $this->request->addParameter('Message.Body.Html.Data', $message->getBodyHtml());
+            $this->request->addParameter('Message.Body.Html.Charset', $message->getCharsetBodyHtml());
         }
 
         $response = $this->request->getResponse();
 
         if ($response['info']['http_code'] != 200)
         {
-            throw new RuntimeException('Unknown HTTP Response Code');
+            throw new \RuntimeException('Unknown HTTP Response Code: ' . print_r ($response, true));
         }
 
         return $this;

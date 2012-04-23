@@ -1,6 +1,6 @@
 <?php
 
-namespace \Amazon\Interfaces\Service;
+namespace Amazon\Interfaces\Service;
 
 interface SES
 {

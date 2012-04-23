@@ -1,6 +1,6 @@
 <?php
 
-namespace \Amazon\SES;
+namespace Amazon\SES;
 
 class Message implements \Amazon\Interfaces\SES\Message
 {
@@ -191,7 +191,7 @@ class Message implements \Amazon\Interfaces\SES\Message
 
     public function hasSubject()
     {
-        return (!is_null($this->subject) && !is_empty($this->subject));
+        return (!is_null($this->subject) && !empty($this->subject));
     }
 
     public function setBodyText($body_text)
@@ -271,7 +271,7 @@ class Message implements \Amazon\Interfaces\SES\Message
             return false;
         }
 
-        if (!$this->hasSubject() || !$this->hasBodyHtml() || !$this->hasBodyText())
+        if (!$this->hasSubject() && !$this->hasBodyHtml() && !$this->hasBodyText())
         {
             return false;
         }

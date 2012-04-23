@@ -1,6 +1,6 @@
 <?php
 
-namespace \Amazon\Interfaces\SES;
+namespace Amazon\Interfaces\SES;
 
 interface Message
 {

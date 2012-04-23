@@ -1,6 +1,6 @@
 <?php
 
-namespace \Amazon\Auth;
+namespace Amazon\Auth;
 use \Amazon\Interfaces\Credentials as ICredentials;
 
 class Credentials implements ICredentials
@@ -44,14 +44,14 @@ class Credentials implements ICredentials
 
     public function getAuthHeader($nonce)
     {
-        $auth = sprintf('AWS3-HTTPS AWSAccessKeyId=%s,Alogorithm=HmacSHA256,Signature=%s', $this->getAuthKey(), $this->getSignature($nonce));
+        $auth = sprintf('AWS3-HTTPS AWSAccessKeyId=%s,Algorithm=HmacSHA256,Signature=%s', $this->getAuthKey(), $this->getSignature($nonce));
 
         return $auth;
     }
 
     public function getSignature($nonce)
     {
-        return base64_encode(hash_hmac('sha256', $to_sign, $this->getSecret(), true));
+        return base64_encode(hash_hmac('sha256', $nonce, $this->getSecret(), true));
     }
 
 }

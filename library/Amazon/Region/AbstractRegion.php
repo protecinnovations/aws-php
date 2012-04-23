@@ -1,6 +1,6 @@
 <?php
 
-namespace \Amazon\Region;
+namespace Amazon\Region;
 
 abstract class AbstractRegion
 {
@@ -11,6 +11,6 @@ abstract class AbstractRegion
 
     public function getSESHost()
     {
-        throw new RuntimeException('SES Is not enabled in this region');
+        throw new \RuntimeException('SES Is not enabled in this region');
     }
 }
