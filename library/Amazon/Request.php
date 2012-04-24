@@ -77,6 +77,7 @@ class Request
 
         if (is_null($this->host) || empty($this->host))
         {
+            throw new \RuntimeException('No host set');
         }
     }
 
@@ -151,7 +152,6 @@ class Request
             'info' => $info,
             'response' => $return_xml,
         );
-
     }
 
     public function addParameter($key, $value)

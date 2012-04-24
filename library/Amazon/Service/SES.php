@@ -4,7 +4,6 @@ namespace Amazon\Service;
 
 use \Amazon\Interfaces;
 
-
 class SES implements Interfaces\Authenticated
 {
     protected $credentials;
@@ -46,7 +45,7 @@ class SES implements Interfaces\Authenticated
 
         $addresses = array();
 
-        foreach($response['response']->ListVerifiedEmailAddressesResult->VerifiedEmailAddresses->member as $address)
+        foreach ($response['response']->ListVerifiedEmailAddressesResult->VerifiedEmailAddresses->member as $address)
         {
             $addresses[] = $address;
         }
