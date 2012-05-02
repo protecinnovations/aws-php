@@ -250,7 +250,7 @@ class Message implements \Amazon\Interfaces\SES\Message
 
     public function setCharsetBodyHtml($charset_body_html)
     {
-        $this->subject = $subject;
+        $this->charset_body_html = $charset_body_html;
         return $this;
     }
 
