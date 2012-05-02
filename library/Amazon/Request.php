@@ -164,12 +164,12 @@ class Request
         {
             if (is_array($this->params["$key"]))
             {
-                $parans["$key"][] = $value;
+                $this->params["$key"][] = $value;
             }
             else
             {
                 $old_value = $this->params["$key"];
-                $params["$key"] = array(
+                $this->params["$key"] = array(
                     $old_value,
                     $value
                 );
