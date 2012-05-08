@@ -10,5 +10,5 @@ interface SES
     public function deleteVerifiedEmailAddress($email);
     public function getSendQuota();
     public function getSendStatistics();
-    public function sendEmail(\Amazon\SES\Message $message);
+    public function sendEmail(\Amazon\Interfaces\SES\Message $message);
 }
