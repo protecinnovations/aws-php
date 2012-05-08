@@ -131,7 +131,7 @@ class SES implements Interfaces\Authenticated
         return $data_points;
     }
 
-    public function sendEmail(\Amazon\SES\Message $message)
+    public function sendEmail(\Amazon\Interfaces\SES\Message $message)
     {
         if (!$message->isValid())
         {
