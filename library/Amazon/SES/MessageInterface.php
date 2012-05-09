@@ -1,8 +1,8 @@
 <?php
 
-namespace Amazon\Interfaces\SES;
+namespace Amazon\SES;
 
-interface Message
+interface MessageInterface
 {
     public function addTo($to);
     public function setTo($to);

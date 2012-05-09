@@ -31,7 +31,7 @@ class Request
         return $this;
     }
 
-    public function setCredentials(\Amazon\Interfaces\Credentials $credentials)
+    public function setCredentials(\Amazon\CredentialsInterface $credentials)
     {
         $this->credentials = $credentials;
 

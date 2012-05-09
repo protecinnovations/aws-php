@@ -1,8 +1,8 @@
 <?php
 
-namespace Amazon\Interfaces;
+namespace Amazon;
 
-interface Credentials
+interface CredentialsInterface
 {
     public function getAuthHeader($nonce);
 }

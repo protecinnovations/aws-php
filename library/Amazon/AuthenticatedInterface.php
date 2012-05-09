@@ -1,8 +1,8 @@
 <?php
 
-namespace Amazon\Interfaces;
+namespace Amazon;
 
-interface Authenticated
+interface AuthenticatedInterface
 {
     public function authenticate(Credentials $credentials);
 }

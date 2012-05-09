@@ -2,7 +2,7 @@
 
 namespace Amazon\SES;
 
-class Message implements \Amazon\Interfaces\SES\Message
+class Message implements \Amazon\SES\MessageInterface
 {
     protected $to = array();
     protected $cc = array();

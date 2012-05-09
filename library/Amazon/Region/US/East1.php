@@ -1,9 +1,8 @@
 <?php
 
 namespace Amazon\Region\US;
-use \Amazon\Interfaces;
 
-class East1 extends \Amazon\Region\AbstractRegion implements Interfaces\Region
+class East1 extends \Amazon\Region\AbstractRegion implements \Amazon\RegionInterface
 {
     public function isSESEnabled()
     {

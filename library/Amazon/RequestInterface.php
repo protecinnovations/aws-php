@@ -1,11 +1,11 @@
 <?php
 
-namespace Amazon\Interfaces;
+namespace Amazon;
 
-interface Request
+interface RequestInterface
 {
     public function setUserAgent($user_agent);
-    public function setCredentials(\Amazon\Interfaces\Credentials $credentials);
+    public function setCredentials(\Amazon\CredentialsInterface $credentials);
     public function setAction($action);
     public function setHost($host);
     public function setPath($path);

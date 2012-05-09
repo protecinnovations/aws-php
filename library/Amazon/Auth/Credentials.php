@@ -1,7 +1,7 @@
 <?php
 
 namespace Amazon\Auth;
-use \Amazon\Interfaces\Credentials as ICredentials;
+use \Amazon\CredentialsInterface as ICredentials;
 
 class Credentials implements ICredentials
 {

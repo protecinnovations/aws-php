@@ -1,8 +1,8 @@
 <?php
 
-namespace Amazon\Interfaces;
+namespace Amazon;
 
-interface Region
+interface RegionInterface
 {
     public function isSESEnabled();
     public function getSESHost();

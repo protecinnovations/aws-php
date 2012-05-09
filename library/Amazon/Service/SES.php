@@ -2,20 +2,22 @@
 
 namespace Amazon\Service;
 
-use \Amazon\Interfaces;
-
-class SES implements Interfaces\Authenticated
+class SES implements \Amazon\AuthenticatedInterface
 {
     protected $credentials;
     protected $region;
     protected $request = null;
 
-    public function authenticate(Interfaces\Credentials $credentials)
+    public function authenticate(\Amazon\CredentialsInterface $credentials)
     {
         $this->credentials = $credentials;
     }
 
-    public function __construct(\Amazon\Interfaces\Credentials $credentials, \Amazon\Interfaces\SES\Request $request = null, \Amazon\Interfaces\Region $region = null)
+    public function __construct(
+        \Amazon\CredentialsInterface $credentials,
+        \Amazon\SES\RequestInterface $request = null,
+        \Amazon\RegionInterface $region = null
+    )
     {
         if (is_null($request))
         {
@@ -131,7 +133,7 @@ class SES implements Interfaces\Authenticated
         return $data_points;
     }
 
-    public function sendEmail(\Amazon\Interfaces\SES\Message $message)
+    public function sendEmail(\Amazon\SES\MessageInterface $message)
     {
         if (!$message->isValid())
         {
