@@ -4,5 +4,5 @@ namespace Amazon;
 
 interface AuthenticatedInterface
 {
-    public function authenticate(Credentials $credentials);
+    public function authenticate(CredentialsInterface $credentials);
 }
