@@ -28,399 +28,438 @@ class MessageTest extends \PHPUnit_Framework_TestCase
     {
     }
 
-    /**
-     * @covers Amazon\SES\Message::addTo
-     * @todo   Implement testAddTo().
-     */
     public function testAddTo()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $to = sha1(microtime());
+
+        $this->object->addTo($to);
+
+        $this->assertAttributeSame(array($to), 'to', $this->object);
     }
 
-    /**
-     * @covers Amazon\SES\Message::setTo
-     * @todo   Implement testSetTo().
-     */
+    public function testAddToMulti()
+    {
+        $to = array();
+        $to[] = sha1(microtime());
+        $to[] = sha1($to[0]);
+
+        $this->object->addTo($to);
+
+        $this->assertAttributeSame($to, 'to', $this->object);
+    }
+
+
     public function testSetTo()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $to = sha1(microtime());
+
+        $this->object->setTo($to);
+
+        $this->assertAttributeSame(array($to), 'to', $this->object);
+    }
+
+    public function testSetToMulti()
+    {
+        $to = array();
+        $to[] = sha1(microtime());
+        $to[] = sha1($to[0]);
+
+        $this->object->setTo($to);
+
+        $this->assertAttributeSame($to, 'to', $this->object);
     }
 
     /**
-     * @covers Amazon\SES\Message::getTo
-     * @todo   Implement testGetTo().
+     * @depends testSetTo
      */
     public function testGetTo()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $to = sha1(microtime());
+        $this->object->setTo($to);
+
+        $this->assertSame(array($to), $this->object->getTo());
     }
 
-    /**
-     * @covers Amazon\SES\Message::addCc
-     * @todo   Implement testAddCc().
-     */
     public function testAddCc()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $cc = sha1(microtime());
+
+        $this->object->addCc($cc);
+
+        $this->assertAttributeSame(array($cc), 'cc', $this->object);
     }
 
-    /**
-     * @covers Amazon\SES\Message::setCc
-     * @todo   Implement testSetCc().
-     */
+    public function testAddCcMulti()
+    {
+        $cc = array();
+        $cc[] = sha1(microtime());
+        $cc[] = sha1($cc[0]);
+
+        $this->object->addCc($cc);
+
+        $this->assertAttributeSame($cc, 'cc', $this->object);
+    }
+
+
     public function testSetCc()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $cc = sha1(microtime());
+
+        $this->object->setCc($cc);
+
+        $this->assertAttributeSame(array($cc), 'cc', $this->object);
+    }
+
+    public function testSetCcMulti()
+    {
+        $cc = array();
+        $cc[] = sha1(microtime());
+        $cc[] = sha1($cc[0]);
+
+        $this->object->setCc($cc);
+
+        $this->assertAttributeSame($cc, 'cc', $this->object);
     }
 
     /**
-     * @covers Amazon\SES\Message::getCc
-     * @todo   Implement testGetCc().
+     * @depends testSetCc
      */
     public function testGetCc()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $cc = sha1(microtime());
+        $this->object->setCc($cc);
+
+        $this->assertSame(array($cc), $this->object->getCc());
     }
 
-    /**
-     * @covers Amazon\SES\Message::addBcc
-     * @todo   Implement testAddBcc().
-     */
     public function testAddBcc()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $bcc = sha1(microtime());
+
+        $this->object->addBcc($bcc);
+
+        $this->assertAttributeSame(array($bcc), 'bcc', $this->object);
     }
 
-    /**
-     * @covers Amazon\SES\Message::setBcc
-     * @todo   Implement testSetBcc().
-     */
+    public function testAddBccMulti()
+    {
+        $bcc = array();
+        $bcc[] = sha1(microtime());
+        $bcc[] = sha1($bcc[0]);
+
+        $this->object->addBcc($bcc);
+
+        $this->assertAttributeSame($bcc, 'bcc', $this->object);
+    }
+
+
     public function testSetBcc()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $bcc = sha1(microtime());
+
+        $this->object->setBcc($bcc);
+
+        $this->assertAttributeSame(array($bcc), 'bcc', $this->object);
+    }
+
+    public function testSetBccMulti()
+    {
+        $bcc = array();
+        $bcc[] = sha1(microtime());
+        $bcc[] = sha1($bcc[0]);
+
+        $this->object->setBcc($bcc);
+
+        $this->assertAttributeSame($bcc, 'bcc', $this->object);
     }
 
     /**
-     * @covers Amazon\SES\Message::getBcc
-     * @todo   Implement testGetBcc().
+     * @depends testSetBcc
      */
     public function testGetBcc()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $bcc = sha1(microtime());
+        $this->object->setBcc($bcc);
+
+        $this->assertSame(array($bcc), $this->object->getBcc());
     }
 
-    /**
-     * @covers Amazon\SES\Message::addReplyTo
-     * @todo   Implement testAddReplyTo().
-     */
     public function testAddReplyTo()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $reply_to = sha1(microtime());
+
+        $this->object->addReplyTo($reply_to);
+
+        $this->assertAttributeSame(array($reply_to), 'reply_to', $this->object);
     }
 
-    /**
-     * @covers Amazon\SES\Message::setReplyTo
-     * @todo   Implement testSetReplyTo().
-     */
+    public function testAddReplyToMulti()
+    {
+        $reply_to = array();
+        $reply_to[] = sha1(microtime());
+        $reply_to[] = sha1($reply_to[0]);
+
+        $this->object->addReplyTo($reply_to);
+
+        $this->assertAttributeSame($reply_to, 'reply_to', $this->object);
+    }
+
+
     public function testSetReplyTo()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $reply_to = sha1(microtime());
+
+        $this->object->setReplyTo($reply_to);
+
+        $this->assertAttributeSame(array($reply_to), 'reply_to', $this->object);
+    }
+
+    public function testSetReplyToMulti()
+    {
+        $reply_to = array();
+        $reply_to[] = sha1(microtime());
+        $reply_to[] = sha1($reply_to[0]);
+
+        $this->object->setReplyTo($reply_to);
+
+        $this->assertAttributeSame($reply_to, 'reply_to', $this->object);
     }
 
     /**
-     * @covers Amazon\SES\Message::getReplyTo
-     * @todo   Implement testGetReplyTo().
+     * @depends testSetReplyTo
      */
     public function testGetReplyTo()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $reply_to = sha1(microtime());
+        $this->object->setReplyTo($reply_to);
+
+        $this->assertSame(array($reply_to), $this->object->getReplyTo());
     }
 
-    /**
-     * @covers Amazon\SES\Message::setFrom
-     * @todo   Implement testSetFrom().
-     */
     public function testSetFrom()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $this->object->setFrom('foo', 'bar');
+
+        $this->assertAttributeSame('"foo" <bar>', 'from', $this->object);
     }
 
-    /**
-     * @covers Amazon\SES\Message::getFrom
-     * @todo   Implement testGetFrom().
-     */
     public function testGetFrom()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $this->object->setFrom('foo', 'bar');
+
+        $this->assertSame('"foo" <bar>', $this->object->getFrom());
     }
 
-    /**
-     * @covers Amazon\SES\Message::setReturnPath
-     * @todo   Implement testSetReturnPath().
-     */
     public function testSetReturnPath()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $return_path = sha1(microtime());
+
+        $this->object->setReturnPath($return_path);
+        $this->assertAttributeSame($return_path, 'return_path', $this->object);
     }
 
     /**
-     * @covers Amazon\SES\Message::getReturnPath
-     * @todo   Implement testGetReturnPath().
+     * @depends testSetReturnPath
      */
     public function testGetReturnPath()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $return_path = sha1(microtime());
+
+        $this->object->setReturnPath($return_path);
+        $this->assertSame($return_path, $this->object->getReturnPath());
     }
 
     /**
-     * @covers Amazon\SES\Message::hasReturnPath
-     * @todo   Implement testHasReturnPath().
+     * @depends testSetReturnPath
      */
     public function testHasReturnPath()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $this->assertFalse($this->object->hasReturnPath());
+
+        $this->object->setReturnPath('');
+        $this->assertFalse($this->object->hasReturnPath());
+
+        $this->object->setReturnPath(null);
+        $this->assertFalse($this->object->hasReturnPath());
+
+        $this->object->setReturnPath('test');
+        $this->assertTrue($this->object->hasReturnPath());
     }
 
-    /**
-     * @covers Amazon\SES\Message::setSubject
-     * @todo   Implement testSetSubject().
-     */
     public function testSetSubject()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $subject = sha1(microtime());
+
+        $this->object->setSubject($subject);
+        $this->assertAttributeSame($subject, 'subject', $this->object);
     }
 
     /**
-     * @covers Amazon\SES\Message::getSubject
-     * @todo   Implement testGetSubject().
+     * @depends testSetSubject
      */
     public function testGetSubject()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $subject = sha1(microtime());
+
+        $this->object->setSubject($subject);
+        $this->assertSame($subject, $this->object->getSubject());
     }
 
     /**
-     * @covers Amazon\SES\Message::hasSubject
-     * @todo   Implement testHasSubject().
+     * @depends testSetSubject
      */
     public function testHasSubject()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $this->assertFalse($this->object->hasSubject());
+
+        $this->object->setSubject('');
+        $this->assertFalse($this->object->hasSubject());
+
+        $this->object->setSubject(null);
+        $this->assertFalse($this->object->hasSubject());
+
+        $this->object->setSubject('test');
+        $this->assertTrue($this->object->hasSubject());
     }
 
-    /**
-     * @covers Amazon\SES\Message::setBodyText
-     * @todo   Implement testSetBodyText().
-     */
     public function testSetBodyText()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $body_text = sha1(microtime());
+
+        $this->object->setBodyText($body_text);
+        $this->assertAttributeSame($body_text, 'body_text', $this->object);
     }
 
     /**
-     * @covers Amazon\SES\Message::getBodyText
-     * @todo   Implement testGetBodyText().
+     * @depends testSetBodyText
      */
     public function testGetBodyText()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $body_text = sha1(microtime());
+
+        $this->object->setBodyText($body_text);
+        $this->assertSame($body_text, $this->object->getBodyText());
     }
 
     /**
-     * @covers Amazon\SES\Message::hasBodyText
-     * @todo   Implement testHasBodyText().
+     * @depends testSetBodyText
      */
     public function testHasBodyText()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $this->assertFalse($this->object->hasBodyText());
+
+        $this->object->setBodyText('');
+        $this->assertFalse($this->object->hasBodyText());
+
+        $this->object->setBodyText(null);
+        $this->assertFalse($this->object->hasBodyText());
+
+        $this->object->setBodyText('test');
+        $this->assertTrue($this->object->hasBodyText());
     }
 
-    /**
-     * @covers Amazon\SES\Message::setBodyHtml
-     * @todo   Implement testSetBodyHtml().
-     */
     public function testSetBodyHtml()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $body_html = sha1(microtime());
+
+        $this->object->setBodyHtml($body_html);
+        $this->assertAttributeSame($body_html, 'body_html', $this->object);
     }
 
     /**
-     * @covers Amazon\SES\Message::getBodyHtml
-     * @todo   Implement testGetBodyHtml().
+     * @depends testSetBodyHtml
      */
     public function testGetBodyHtml()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $body_html = sha1(microtime());
+
+        $this->object->setBodyHtml($body_html);
+        $this->assertSame($body_html, $this->object->getBodyHtml());
     }
 
     /**
-     * @covers Amazon\SES\Message::hasBodyHtml
-     * @todo   Implement testHasBodyHtml().
+     * @depends testSetBodyHtml
      */
     public function testHasBodyHtml()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $this->assertFalse($this->object->hasBodyHtml());
+
+        $this->object->setBodyHtml('');
+        $this->assertFalse($this->object->hasBodyHtml());
+
+        $this->object->setBodyHtml(null);
+        $this->assertFalse($this->object->hasBodyHtml());
+
+        $this->object->setBodyHtml('test');
+        $this->assertTrue($this->object->hasBodyHtml());
     }
 
-    /**
-     * @covers Amazon\SES\Message::setCharsetSubject
-     * @todo   Implement testSetCharsetSubject().
-     */
     public function testSetCharsetSubject()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $this->object->setCharsetSubjecT('ISO-8859-1');
+        $this->assertAttributeSame('ISO-8859-1', 'charset_subject', $this->object);
     }
 
     /**
-     * @covers Amazon\SES\Message::getCharsetSubject
-     * @todo   Implement testGetCharsetSubject().
+     * @depends testSetCharsetSubject
      */
     public function testGetCharsetSubject()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $this->assertSame('UTF-8', $this->object->getCharsetSubject());
+
+        $this->object->setCharsetSubject('ISO-8859-1');
+
+        $this->assertSame('ISO-8859-1', $this->object->getCharsetSubject());
     }
 
-    /**
-     * @covers Amazon\SES\Message::setCharsetBodyText
-     * @todo   Implement testSetCharsetBodyText().
-     */
     public function testSetCharsetBodyText()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $this->object->setCharsetBodyText('ISO-8859-1');
+        $this->assertAttributeSame('ISO-8859-1', 'charset_body_text', $this->object);
     }
 
     /**
-     * @covers Amazon\SES\Message::getCharsetBodyText
-     * @todo   Implement testGetCharsetBodyText().
+     * @depends testSetCharsetBodyText
      */
     public function testGetCharsetBodyText()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $this->assertSame('UTF-8', $this->object->getCharsetBodyText());
+
+        $this->object->setCharsetBodyText('ISO-8859-1');
+
+        $this->assertSame('ISO-8859-1', $this->object->getCharsetBodyText());
     }
 
-    /**
-     * @covers Amazon\SES\Message::setCharsetBodyHtml
-     * @todo   Implement testSetCharsetBodyHtml().
-     */
     public function testSetCharsetBodyHtml()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $this->object->setCharsetBodyHtml('ISO-8859-1');
+        $this->assertAttributeSame('ISO-8859-1', 'charset_body_html', $this->object);
     }
 
     /**
-     * @covers Amazon\SES\Message::getCharsetBodyHtml
-     * @todo   Implement testGetCharsetBodyHtml().
+     * @depends testSetCharsetBodyHtml
      */
     public function testGetCharsetBodyHtml()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $this->assertSame('UTF-8', $this->object->getCharsetBodyHtml());
+
+        $this->object->setCharsetBodyHtml('ISO-8859-1');
+
+        $this->assertSame('ISO-8859-1', $this->object->getCharsetBodyHtml());
     }
 
-    /**
-     * @covers Amazon\SES\Message::isValid
-     * @todo   Implement testIsValid().
-     */
     public function testIsValid()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $this->assertFalse($this->object->isValid());
+        $this->object->setTo(sha1(microtime()));
+        $this->assertFalse($this->object->isValid());
+        $this->object->setFrom(sha1(microtime()), sha1(microtime()));
+        $this->assertFalse($this->object->isValid());
+        $this->object->setSubject(sha1(microtime()));
+        $this->assertTrue($this->object->isValid());
+        $this->object->setBodyHtml(sha1(microtime()));
+        $this->assertTrue($this->object->isValid());
+        $this->object->setBodyText(sha1(microtime()));
+        $this->assertTrue($this->object->isValid());
     }
 }

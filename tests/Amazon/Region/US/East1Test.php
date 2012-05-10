@@ -28,27 +28,13 @@ class East1Test extends \PHPUnit_Framework_TestCase
     {
     }
 
-    /**
-     * @covers Amazon\Region\US\East1::isSESEnabled
-     * @todo   Implement testIsSESEnabled().
-     */
     public function testIsSESEnabled()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $this->assertTrue($this->object->isSESEnabled());
     }
 
-    /**
-     * @covers Amazon\Region\US\East1::getSESHost
-     * @todo   Implement testGetSESHost().
-     */
     public function testGetSESHost()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $this->assertSame('email.us-east-1.amazonaws.com', $this->object->getSESHost());
     }
 }

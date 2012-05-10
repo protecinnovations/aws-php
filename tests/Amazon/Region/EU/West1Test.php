@@ -28,27 +28,14 @@ class West1Test extends \PHPUnit_Framework_TestCase
     {
     }
 
-    /**
-     * @covers Amazon\Region\AbstractRegion::isSESEnabled
-     * @todo   Implement testIsSESEnabled().
-     */
     public function testIsSESEnabled()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $this->assertFalse($this->object->isSESEnabled());
     }
 
-    /**
-     * @covers Amazon\Region\AbstractRegion::getSESHost
-     * @todo   Implement testGetSESHost().
-     */
     public function testGetSESHost()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $this->setExpectedException('\RuntimeException');
+        $this->object->getSESHost();
     }
 }

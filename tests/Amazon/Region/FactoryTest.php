@@ -28,15 +28,23 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
     {
     }
 
-    /**
-     * @covers Amazon\Region\Factory::getRegion
-     * @todo   Implement testGetRegion().
-     */
-    public function testGetRegion()
+    public function testGetRegionEUWest1()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $region = $this->object->getRegion('eu-west-1');
+
+        $this->assertInstanceOf('\Amazon\Region\EU\West1', $region);
+    }
+
+    public function testGetRegionUSEast1()
+    {
+        $region = $this->object->getRegion('us-east-1');
+
+        $this->assertInstanceOf('\Amazon\Region\US\East1', $region);
+    }
+
+    public function testGetRegionUnknown()
+    {
+        $this->setExpectedException('\RuntimeException');
+        $region = $this->object->getRegion('doesnt-exist-2');
     }
 }

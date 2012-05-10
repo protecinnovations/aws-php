@@ -79,6 +79,11 @@ class Request
         {
             throw new \RuntimeException('No host set');
         }
+
+        if (is_null($this->credentials))
+        {
+            throw new \RuntimeException('No Credentials set');
+        }
     }
 
     public function getResponse()
@@ -143,6 +148,11 @@ class Request
         curl_setopt($curl, CURLINFO_HEADER_OUT, true);
 
         $return = curl_exec($curl);
+
+        if ($return === false)
+        {
+            throw new \RuntimeException('Could not connect to given URL');
+        }
 
         $return_xml = simplexml_load_string($return);
 

@@ -1,5 +1,10 @@
 <?php
 
+require_once 'Mockery/Loader.php';
+require_once 'Hamcrest/Hamcrest.php';
+$loader = new \Mockery\Loader;
+$loader->register();
+
 function aws_autoload($class)
 {
     if (\strpos($class, '\\') === false)

@@ -17,5 +17,7 @@ class Factory
             break;
         }
 
+        throw new \RuntimeException('Region not found');
+
     }
 }

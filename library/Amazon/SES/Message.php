@@ -118,27 +118,27 @@ class Message implements \Amazon\SES\MessageInterface
 
     public function addReplyTo($reply_to)
     {
-        if (is_array($bcc))
+        if (is_array($reply_to))
         {
-            $this->bcc = array_merge($this->bcc, $bcc);
+            $this->reply_to = array_merge($this->reply_to, $reply_to);
         }
         else
         {
-            $this->bcc[] = $bcc;
+            $this->reply_to[] = $reply_to;
         }
 
         return $this;
     }
 
-    public function setReplyTo($bcc)
+    public function setReplyTo($reply_to)
     {
-        if (is_array($bcc))
+        if (is_array($reply_to))
         {
-            $this->bcc = $bcc;
+            $this->reply_to = $reply_to;
         }
         else
         {
-            $this->bcc = array($bcc);
+            $this->reply_to = array($reply_to);
         }
 
         return $this;
@@ -175,7 +175,7 @@ class Message implements \Amazon\SES\MessageInterface
 
     public function hasReturnPath()
     {
-        return (!is_null($this->return_path) && !is_empty($this->return_path));
+        return (!is_null($this->return_path) && !empty($this->return_path));
     }
 
     public function setSubject($subject)
@@ -256,7 +256,7 @@ class Message implements \Amazon\SES\MessageInterface
 
     public function getCharsetBodyHtml()
     {
-        return $this->subject;
+        return $this->charset_body_html;
     }
 
     public function isValid()

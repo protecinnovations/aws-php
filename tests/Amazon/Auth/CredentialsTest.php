@@ -28,63 +28,93 @@ class CredentialsTest extends \PHPUnit_Framework_TestCase
     {
     }
 
-    /**
-     * @covers Amazon\Auth\Credentials::getAuthKey
-     * @todo   Implement testGetAuthKey().
-     */
-    public function testGetAuthKey()
+    public function testGetAuthKeyWhenUndefined()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $this->setExpectedException('UnexpectedValueException');
+
+        $value = $this->object->getAuthKey();
     }
 
-    /**
-     * @covers Amazon\Auth\Credentials::setAuthKey
-     * @todo   Implement testSetAuthKey().
-     */
     public function testSetAuthKey()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $this->assertAttributeEmpty('auth_key', $this->object);
+
+        $auth_key = sha1(microtime());
+
+        $this->object->setAuthKey($auth_key);
+
+        $this->assertAttributeEquals($auth_key, 'auth_key', $this->object);
+
+        return $auth_key;
     }
 
-    /**
-     * @covers Amazon\Auth\Credentials::setSecret
-     * @todo   Implement testSetSecret().
-     */
+    public function testGetAuthKey()
+    {
+        $auth_key = $this->testSetAuthKey();
+
+        $this->assertSame($auth_key, $this->object->getAuthKey());
+    }
+
     public function testSetSecret()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        $secret = sha1(microtime());
+
+        $this->assertAttributeEmpty('secret', $this->object);
+        $this->object->setSecret($secret);
+
+        $this->assertAttributeEquals($secret, 'secret', $this->object);
     }
 
-    /**
-     * @covers Amazon\Auth\Credentials::getAuthHeader
-     * @todo   Implement testGetAuthHeader().
-     */
     public function testGetAuthHeader()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
+        $secret = sha1(microtime());
+        $nonce = sha1($secret);
+        $auth_key = sha1($nonce);
+
+        $this->object->setAuthKey($auth_key);
+        $this->object->setSecret($secret);
+
+        $signature = base64_encode(
+            hash_hmac(
+                'sha256',
+                $nonce,
+                $secret,
+                true
+            )
         );
+
+        $auth_header = sprintf('AWS3-HTTPS AWSAccessKeyId=%s,Algorithm=HmacSHA256,Signature=%s', $auth_key, $signature);
+
+        $this->assertAttributeEquals($auth_key, 'auth_key', $this->object);
+        $this->assertAttributeEquals($secret, 'secret', $this->object);
+        $this->assertSame($auth_header, $this->object->getAuthHeader($nonce));
     }
 
-    /**
-     * @covers Amazon\Auth\Credentials::getSignature
-     * @todo   Implement testGetSignature().
-     */
     public function testGetSignature()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
+        $secret = sha1(microtime());
+        $nonce = sha1($secret);
+
+        $this->object->setSecret($secret);
+
+        $signature = base64_encode(
+            hash_hmac(
+                'sha256',
+                $nonce,
+                $secret,
+                true
+            )
         );
+
+        $this->assertSame($signature, $this->object->getSignature($nonce));
+    }
+
+    public function testGetSignatureWithNoSecret()
+    {
+        $nonce = sha1(microtime());
+
+        $this->setExpectedException('\RuntimeException');
+
+        $this->object->getSignature($nonce);
     }
 }
