@@ -3,3 +3,6 @@ php:
   - 5.3
   - 5.4
 before_install: "bash ci/dependencies.sh"
+notifications:
+  email:
+    - dev@protecinnovations.co.uk
