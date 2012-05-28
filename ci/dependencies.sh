@@ -1,6 +1,7 @@
 #!/bin/bash
 
 pyrus channel-discover pear.survivethedeepend.com
-pyrus install deepend/Mockery
+pyrus channel-discover hamcrest.googlecode.com/svn/pear
+pyrus install deepend/Mockery --alldeps
 
 phpenv rehash
