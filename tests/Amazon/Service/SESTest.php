@@ -406,10 +406,10 @@ class SESTest extends \PHPUnit_Framework_TestCase
         $obj3->Rejects = 3;
 
         $response['response']
-            ->getSendStatisticsResult = new \stdClass();
+            ->GetSendStatisticsResult = new \stdClass();
 
         $response['response']
-            ->getSendStatisticsResult
+            ->GetSendStatisticsResult
             ->SendDataPoints = new \stdClass();
 
         $response['response']
