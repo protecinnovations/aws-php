@@ -383,6 +383,28 @@ class SESTest extends \PHPUnit_Framework_TestCase
         $time2 = sha1($time1);
         $time3 = sha1($time2);
 
+
+        $obj1 = new \stdClass();
+        $obj1->Timestamp = $time1;
+        $obj1->Bounces = 1;
+        $obj1->Complaints = 1;
+        $obj1->DeliveryAttemptes = 1;
+        $obj1->Reject = 1;
+
+        $obj2 = new \stdClass();
+        $obj2->Timestamp = $time2;
+        $obj2->Bounces = 2;
+        $obj2->Complaints = 2;
+        $obj2->DeliveryAttemptes = 2;
+        $obj2->Reject = 2;
+
+        $obj3 = new \stdClass();
+        $obj3->Timestamp = $time3;
+        $obj3->Bounces = 3;
+        $obj3->Complaints = 3;
+        $obj3->DeliveryAttemptes = 3;
+        $obj3->Reject = 3;
+
         $response['response']
             ->getSendStatisticsResult = new \stdClass();
 
@@ -390,29 +412,14 @@ class SESTest extends \PHPUnit_Framework_TestCase
             ->getSendStatisticsResult
             ->SendDataPoints = new \stdClass();
 
-        $response['response']->GetSendStatisticsResult->SendDataPoints->member = array(
-            (object) array(
-                'Timestamp' => $time1,
-                'Bounces' => 1,
-                'Complaints' => 1,
-                'DeliveryAttempts' => 1,
-                'Rejects' => 1
-            ),
-            (object) array(
-                'Timestamp' => $time2,
-                'Bounces' => 2,
-                'Complaints' => 2,
-                'DeliveryAttempts' => 2,
-                'Rejects' => 2
-            ),
-            (object) array(
-                'Timestamp' => $time3,
-                'Bounces' => 3,
-                'Complaints' => 3,
-                'DeliveryAttempts' => 3,
-                'Rejects' => 3
-            ),
-        );
+        $response['response']
+            ->GetSendStatisticsResult
+            ->SendDataPoints
+            ->member = array(
+                $obj1,
+                $obj2,
+                $obj3)
+            );
 
         $this->request_mock
             ->shouldReceive('getResponse')

@@ -1,5 +1,7 @@
 <?php
 
+error_reporting(E_ALL & E_STRICT);
+
 require_once 'Mockery/Loader.php';
 //require_once 'Hamcrest/Hamcrest.php';
 $loader = new \Mockery\Loader;
