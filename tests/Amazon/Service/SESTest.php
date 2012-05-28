@@ -388,22 +388,22 @@ class SESTest extends \PHPUnit_Framework_TestCase
         $obj1->Timestamp = $time1;
         $obj1->Bounces = 1;
         $obj1->Complaints = 1;
-        $obj1->DeliveryAttemptes = 1;
-        $obj1->Reject = 1;
+        $obj1->DeliveryAttempts = 1;
+        $obj1->Rejects = 1;
 
         $obj2 = new \stdClass();
         $obj2->Timestamp = $time2;
         $obj2->Bounces = 2;
         $obj2->Complaints = 2;
-        $obj2->DeliveryAttemptes = 2;
-        $obj2->Reject = 2;
+        $obj2->DeliveryAttempts = 2;
+        $obj2->Rejects = 2;
 
         $obj3 = new \stdClass();
         $obj3->Timestamp = $time3;
         $obj3->Bounces = 3;
         $obj3->Complaints = 3;
-        $obj3->DeliveryAttemptes = 3;
-        $obj3->Reject = 3;
+        $obj3->DeliveryAttempts = 3;
+        $obj3->Rejects = 3;
 
         $response['response']
             ->getSendStatisticsResult = new \stdClass();
@@ -418,7 +418,7 @@ class SESTest extends \PHPUnit_Framework_TestCase
             ->member = array(
                 $obj1,
                 $obj2,
-                $obj3)
+                $obj3
             );
 
         $this->request_mock
