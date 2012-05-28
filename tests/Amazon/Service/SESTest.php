@@ -92,6 +92,13 @@ class SESTest extends \PHPUnit_Framework_TestCase
             );
 
         $response['response']
+            ->ListVerifiedEmailAddressesResult = new \stdClass();
+
+        $response['response']
+            ->ListVerifiedEmailAddressesResult
+            ->VerifiedEmailAddresses = new \stdClass();
+
+        $response['response']
             ->ListVerifiedEmailAddressesResult
             ->VerifiedEmailAddresses
             ->member = $addresses;
@@ -282,6 +289,11 @@ class SESTest extends \PHPUnit_Framework_TestCase
         $response['info']['http_code'] = 200;
         $response['response'] = new \stdClass();
 
+        $response['response'] = new \stdClass();
+
+        $response['response']
+            ->GetSendQuotaResult = new \stdClass();
+
         $response['response']
             ->GetSendQuotaResult
             ->MaxSendRate = 10;
@@ -370,6 +382,13 @@ class SESTest extends \PHPUnit_Framework_TestCase
         $time1 = sha1(microtime());
         $time2 = sha1($time1);
         $time3 = sha1($time2);
+
+        $response['response']
+            ->getSendStatisticsResult = new \stdClass();
+
+        $response['response']
+            ->getSendStatisticsResult
+            ->SendDataPoints = new \stdClass();
 
         $response['response']->GetSendStatisticsResult->SendDataPoints->member = array(
             (object) array(
