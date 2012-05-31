@@ -161,6 +161,7 @@ class Request
         return array(
             'info' => $info,
             'response' => $return_xml,
+            'response_raw' => $return
         );
     }
 
