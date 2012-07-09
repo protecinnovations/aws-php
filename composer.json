@@ -1,0 +1,19 @@
+{
+    "name": "protec/aws-php",
+    "description": "AWS Library",
+    "type": "library",
+    "keywords": [
+        'aws',
+        'ses'
+    ],
+    "homepage": "https://github.com/protecinnovations/aws-php",
+    "licence": "BSD-2-Clause",
+    "require": {
+        "php": ">=5.3.3"
+    },
+    "autoload": {
+        "psr-0": {
+            "Amazon": "library/"
+        }
+    }
+}
