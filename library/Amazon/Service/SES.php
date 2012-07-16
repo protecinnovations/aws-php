@@ -2,44 +2,69 @@
 
 namespace Amazon\Service;
 
+use \Amazon\CredentialsInterface;
+use \Amazon\SES\RequestInterface;
+use \Amazon\RegionInterface;
+use \Amazon\SES\Request as SESRequest;
+use \Amazon\Region\Factory as RegionFactory;
+use \Amazon\Request;
+use \Amazon\SES\MessageInterface;
+use \Amazon\AuthenticatedInterface;
+
+use \RuntimeException;
+use \InvalidArgumentException;
+
+
 class SES implements \Amazon\AuthenticatedInterface
 {
     protected $credentials;
     protected $region;
     protected $request = null;
 
-    public function authenticate(\Amazon\CredentialsInterface $credentials)
+    public function setCredentials(CredentialsInterface $credentials)
     {
         $this->credentials = $credentials;
     }
 
-    public function __construct(
-        \Amazon\CredentialsInterface $credentials,
-        \Amazon\SES\RequestInterface $request = null,
-        \Amazon\RegionInterface $region = null
-    )
+    protected function getCredentials()
     {
-        if (is_null($request))
+        if (is_null($this->credentials))
         {
-            $request = new \Amazon\SES\Request();
+            throw new RuntimeException('No credentials set');
         }
 
-        if (is_null($region))
-        {
-            $factory = new \Amazon\Region\Factory();
+        return $this->credentials;
+    }
+
+    public function authenticate(CredentialsInterface $credentials)
+    {
+        $this->credentials = $credentials;
+    }
+
+    public function __construct(CredentialsInterface $credentials = null, RequestInterface $request = null, RegionInterface $region = null)
+    {
+        if (!is_null($credentials)) {
+            $this->setCredentials($credentials);
+        }
+
+        if (is_null($request)) {
+            $request = new SESRequest();
+        }
+
+        if (is_null($region)) {
+            $factory = new RegionFactory();
             $region = $factory->getRegion('us-east-1');
         }
 
-        $this->authenticate($credentials);
         $this->region = $region;
         $this->request = $request;
-        $this->request->setCredentials($credentials);
+        $this->request->setCredentials($this->getCredentials());
         $this->request->setHost($region->getSESHost());
     }
 
     public function listVerifiedEmailAddresses()
     {
-        $this->request->setMethod(\Amazon\Request::METHOD_GET);
+        $this->request->setMethod(Request::METHOD_GET);
 
         $this->request->setAction('ListVerifiedEmailAddresses');
 
@@ -57,7 +82,7 @@ class SES implements \Amazon\AuthenticatedInterface
 
     public function verifyEmailAddress($email)
     {
-        $this->request->setMethod(\Amazon\Request::METHOD_POST);
+        $this->request->setMethod(Request::METHOD_POST);
         $this->request->setAction('VerifyEmailAddress');
         $this->request->addParameter('EmailAddress', $email);
 
@@ -65,7 +90,7 @@ class SES implements \Amazon\AuthenticatedInterface
 
         if ($response['info']['http_code'] != 200)
         {
-            throw new \RuntimeException('Unknown HTTP Response Code');
+            throw new RuntimeException('Unknown HTTP Response Code');
         }
 
         return $this;
@@ -73,7 +98,7 @@ class SES implements \Amazon\AuthenticatedInterface
 
     public function deleteVerifiedEmailAddress($email)
     {
-        $this->request->setMethod(\Amazon\Request::METHOD_DELETE);
+        $this->request->setMethod(Request::METHOD_DELETE);
         $this->request->setAction('DeleteVerifiedEmailAddress');
         $this->request->addParameter('EmailAddress', $email);
 
@@ -81,7 +106,7 @@ class SES implements \Amazon\AuthenticatedInterface
 
         if ($response['info']['http_code'] != 200)
         {
-            throw new \RuntimeException('Unknown HTTP Response Code');
+            throw new RuntimeException('Unknown HTTP Response Code');
         }
 
         return $this;
@@ -89,14 +114,14 @@ class SES implements \Amazon\AuthenticatedInterface
 
     public function getSendQuota()
     {
-        $this->request->setMethod(\Amazon\Request::METHOD_GET);
+        $this->request->setMethod(Request::METHOD_GET);
         $this->request->setAction('GetSendQuota');
 
         $response = $this->request->getResponse();
 
         if ($response['info']['http_code'] != 200)
         {
-            throw new \RuntimeException('Unknown HTTP Response Code');
+            throw new RuntimeException('Unknown HTTP Response Code');
         }
 
         $quotas = array(
@@ -110,14 +135,14 @@ class SES implements \Amazon\AuthenticatedInterface
 
     public function getSendStatistics()
     {
-        $this->request->setMethod(\Amazon\Request::METHOD_GET);
+        $this->request->setMethod(Request::METHOD_GET);
         $this->request->setAction('GetSendStatistics');
 
         $response = $this->request->getResponse();
 
         if ($response['info']['http_code'] != 200)
         {
-            throw new \RuntimeException('Unknown HTTP Response Code');
+            throw new RuntimeException('Unknown HTTP Response Code');
         }
 
         $data_points = array();
@@ -133,14 +158,14 @@ class SES implements \Amazon\AuthenticatedInterface
         return $data_points;
     }
 
-    public function sendEmail(\Amazon\SES\MessageInterface $message)
+    public function sendEmail(MessageInterface $message)
     {
         if (!$message->isValid())
         {
-            throw new \InvalidArgumentException('Message is not valid');
+            throw new InvalidArgumentException('Message is not valid');
         }
 
-        $this->request->setMethod(\Amazon\Request::METHOD_POST);
+        $this->request->setMethod(Request::METHOD_POST);
         $this->request->setAction('SendEmail');
 
         $this->setTo($message->getTo());
@@ -177,7 +202,7 @@ class SES implements \Amazon\AuthenticatedInterface
 
         if ($response['info']['http_code'] != 200)
         {
-            throw new \RuntimeException('Unknown HTTP Response Code: ' . print_r ($response, true));
+            throw new RuntimeException('Unknown HTTP Response Code: ' . print_r ($response, true));
         }
 
         return $this;
