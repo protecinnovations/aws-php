@@ -58,12 +58,12 @@ class SES implements \Amazon\AuthenticatedInterface
 
         $this->region = $region;
         $this->request = $request;
-        $this->request->setCredentials($this->getCredentials());
         $this->request->setHost($region->getSESHost());
     }
 
     public function listVerifiedEmailAddresses()
     {
+        $this->request->setCredentials($this->getCredentials());
         $this->request->setMethod(Request::METHOD_GET);
 
         $this->request->setAction('ListVerifiedEmailAddresses');
@@ -82,6 +82,7 @@ class SES implements \Amazon\AuthenticatedInterface
 
     public function verifyEmailAddress($email)
     {
+        $this->request->setCredentials($this->getCredentials());
         $this->request->setMethod(Request::METHOD_POST);
         $this->request->setAction('VerifyEmailAddress');
         $this->request->addParameter('EmailAddress', $email);
@@ -98,6 +99,7 @@ class SES implements \Amazon\AuthenticatedInterface
 
     public function deleteVerifiedEmailAddress($email)
     {
+        $this->request->setCredentials($this->getCredentials());
         $this->request->setMethod(Request::METHOD_DELETE);
         $this->request->setAction('DeleteVerifiedEmailAddress');
         $this->request->addParameter('EmailAddress', $email);
@@ -114,6 +116,7 @@ class SES implements \Amazon\AuthenticatedInterface
 
     public function getSendQuota()
     {
+        $this->request->setCredentials($this->getCredentials());
         $this->request->setMethod(Request::METHOD_GET);
         $this->request->setAction('GetSendQuota');
 
@@ -135,6 +138,7 @@ class SES implements \Amazon\AuthenticatedInterface
 
     public function getSendStatistics()
     {
+        $this->request->setCredentials($this->getCredentials());
         $this->request->setMethod(Request::METHOD_GET);
         $this->request->setAction('GetSendStatistics');
 
@@ -165,6 +169,7 @@ class SES implements \Amazon\AuthenticatedInterface
             throw new InvalidArgumentException('Message is not valid');
         }
 
+        $this->request->setCredentials($this->getCredentials());
         $this->request->setMethod(Request::METHOD_POST);
         $this->request->setAction('SendEmail');
 
