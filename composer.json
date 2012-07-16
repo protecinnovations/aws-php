@@ -10,7 +10,7 @@
     "licence": "BSD-2-Clause",
     "require": {
         "php": ">=5.3.3",
-        "ext-curl": "*",
+        "ext-curl": "*"
     },
     "autoload": {
         "psr-0": {
