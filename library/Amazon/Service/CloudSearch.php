@@ -9,6 +9,8 @@ class CloudSearch
 
     protected $search_path = '/2011-02-01/search';
 
+    protected $parameters = [];
+
     public function getSearchPath()
     {
         return $this->search_path;
@@ -46,14 +48,38 @@ class CloudSearch
         return $this;
     }
 
-
     public function search($query_string)
     {
-        $uri = $this->getSearchEndpoint() . $this->getSearchPath() . '?q=' . urlencode($query_string);
+        $this->addParameter('q', $query_string);
+        $uri = $this->getSearchEndpoint() . $this->getSearchPath() . '?' . $this->getParameters();
 
         $return = file_get_contents($uri);
 
         return json_decode($return);
+    }
+
+
+    public function booleanSearch($query_string)
+    {
+        $this->addParameter('bq', $query_string);
+
+        $uri = $this->getSearchEndpoint() . $this->getSearchPath() . '?' . $this->getParameters();
+
+        $return = file_get_contents($uri);
+
+        return json_decode($return);
+    }
+
+    public function addParameter($key, $value)
+    {
+        $this->parameters[$key] = $value;
+
+        return $this;
+    }
+
+    public function getParameters()
+    {
+        return http_build_query($this->parameters);
     }
 
 }
