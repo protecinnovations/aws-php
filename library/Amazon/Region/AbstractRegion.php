@@ -13,4 +13,9 @@ abstract class AbstractRegion
     {
         throw new \RuntimeException('SES Is not enabled in this region');
     }
+
+    public function getS3Host()
+    {
+        return 's3.amazonaws.com';
+    }
 }
