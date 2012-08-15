@@ -8,6 +8,20 @@ class CloudSearch
     protected $document_endpoint = null;
 
     protected $search_path = '/2011-02-01/search';
+    protected $document_batch_path = '/2011-02-01/batch';
+
+    public function getDocumentBatchPath()
+    {
+        return $this->document_batch_path;
+    }
+
+    public function setDocumentBatchPath($document_batch_path)
+    {
+        $this->document_batch_path = $document_batch_path;#
+
+        return $this;
+    }
+
 
     protected $parameters = [];
 
@@ -82,4 +96,53 @@ class CloudSearch
         return http_build_query($this->parameters);
     }
 
+    public function sendSdf($sdf_array)
+    {
+        $content = json_encode($sdf_array);
+
+        $opts = [
+            'http' => [
+                'method' => 'POST',
+                'header' => implode(
+                    "\r\n",
+                    [
+                        'Content-Type: application/json',
+                        'Content-Length: ' . strlen($content),
+                        'Accept: application/json'
+                    ]
+                ),
+                'content' => $content
+            ]
+        ];
+
+        $ctx = stream_context_create($opts);
+
+        $uri = $this->getDocumentEndpoint() . $this->getDocumentBatchPath();
+
+        $return = file_get_contents($uri, false, $ctx);
+
+        return $return;
+    }
+
+    public function generateSdf($id, $action, $fields = array())
+    {
+        switch ($action) {
+            case 'delete':
+                return array(
+                    'type' => "delete",
+                    'id' => $id,
+                    'version' => time()
+                );
+                break;
+            case 'add':
+                return array(
+                    'type' => 'add',
+                    'id' => $id,
+                    'version' => time(),
+                    'lang' => 'en', // only language supported atm ?
+                    'fields' => $fields
+                );
+                break;
+        }
+    }
 }
