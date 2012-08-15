@@ -8,7 +8,7 @@ class CloudSearch
     protected $document_endpoint = null;
 
     protected $search_path = '/2011-02-01/search';
-    protected $document_batch_path = '/2011-02-01/batch';
+    protected $document_batch_path = '/2011-02-01/documents/batch';
 
     public function getDocumentBatchPath()
     {
@@ -17,7 +17,7 @@ class CloudSearch
 
     public function setDocumentBatchPath($document_batch_path)
     {
-        $this->document_batch_path = $document_batch_path;#
+        $this->document_batch_path = $document_batch_path;
 
         return $this;
     }
