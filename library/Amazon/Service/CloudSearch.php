@@ -126,6 +126,9 @@ class CloudSearch
 
     public function generateSdf($id, $action, $fields = array())
     {
+        $id = strtolower($id);
+
+        $id = preg_replace('/[^a-z0-9_]/', '_', $id);
         switch ($action) {
             case 'delete':
                 return array(
