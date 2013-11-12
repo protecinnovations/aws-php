@@ -10,12 +10,13 @@ use \Amazon\Region\Factory as RegionFactory;
 use \Amazon\Request;
 use \Amazon\SES\MessageInterface;
 use \Amazon\AuthenticatedInterface;
+use \Amazon\Service\SESInterface;
 
 use \RuntimeException;
 use \InvalidArgumentException;
 
 
-class SES implements \Amazon\AuthenticatedInterface
+class SES implements AuthenticatedInterface, SESInterface
 {
     protected $credentials;
     protected $region;
