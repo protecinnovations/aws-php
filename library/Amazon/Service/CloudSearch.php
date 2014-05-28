@@ -7,8 +7,15 @@ class CloudSearch
     protected $search_endpoint = null;
     protected $document_endpoint = null;
 
-    protected $search_path = '/2011-02-01/search';
-    protected $document_batch_path = '/2011-02-01/documents/batch';
+    protected $api_version = '2011-03-01';
+
+    protected $search_path = 'search';
+    protected $document_batch_path = 'documents/batch';
+
+    protected $parameters = [];
+
+    const API_VERSION_OLD = '2011-03-01';
+    const API_VERSION_NEW = '2013-01-01';
 
     public function getDocumentBatchPath()
     {
@@ -22,8 +29,17 @@ class CloudSearch
         return $this;
     }
 
+    public function setApiVersion($api_version)
+    {
+        $this->api_version = $api_version;
 
-    protected $parameters = [];
+        return $this;
+    }
+
+    public function getApiVersion()
+    {
+        return $this->api_version;
+    }
 
     public function getSearchPath()
     {
@@ -36,7 +52,6 @@ class CloudSearch
 
         return $this;
     }
-
 
     public function getSearchEndpoint()
     {
@@ -65,19 +80,31 @@ class CloudSearch
     public function search($query_string)
     {
         $this->addParameter('q', $query_string);
-        $uri = $this->getSearchEndpoint() . $this->getSearchPath() . '?' . $this->getParameters();
+
+        $uri = sprintf(
+            '%s/%s/%s?%s'
+            $this->getSearchEndpoint(),
+            $this->getApiVersion(),
+            $this->getSearchPath(),
+            $this->getParameters()
+        );
 
         $return = file_get_contents($uri);
 
         return json_decode($return);
     }
 
-
     public function booleanSearch($query_string)
     {
         $this->addParameter('bq', $query_string);
 
-        $uri = $this->getSearchEndpoint() . $this->getSearchPath() . '?' . $this->getParameters();
+        $uri = sprintf(
+            '%s/%s/%s?%s'
+            $this->getSearchEndpoint(),
+            $this->getApiVersion(),
+            $this->getSearchPath(),
+            $this->getParameters()
+        );
 
         $return = file_get_contents($uri);
 
@@ -102,6 +129,7 @@ class CloudSearch
 
         $opts = [
             'http' => [
+            'ignore_errors' => true,
                 'method' => 'POST',
                 'header' => implode(
                     "\r\n",
@@ -117,7 +145,14 @@ class CloudSearch
 
         $ctx = stream_context_create($opts);
 
-        $uri = $this->getDocumentEndpoint() . $this->getDocumentBatchPath();
+        $uri = sprintf(
+            '%s/%s/%s',
+            $this->getDocumentEndpoint(),
+            $this->getApiVersion(),
+            $this->getDocumentBatchPath()
+        );
+
+        $this->getDocumentEndpoint() . $this->getDocumentBatchPath();
 
         $return = file_get_contents($uri, false, $ctx);
 
@@ -129,22 +164,38 @@ class CloudSearch
         $id = strtolower($id);
 
         $id = preg_replace('/[^a-z0-9_]/', '_', $id);
+
         switch ($action) {
             case 'delete':
-                return array(
-                    'type' => "delete",
-                    'id' => $id,
-                    'version' => time()
-                );
+                if ($this->getApiVersion() == self::API_VERSION_OLD) {
+                    return array(
+                        'type' => "delete",
+                        'id' => $id,
+                        'version' => time()
+                    );
+                } else {
+                    return array(
+                        'type' => "delete",
+                        'id' => $id
+                    );
+                }
                 break;
             case 'add':
-                return array(
-                    'type' => 'add',
-                    'id' => $id,
-                    'version' => time(),
-                    'lang' => 'en', // only language supported atm ?
-                    'fields' => $fields
-                );
+                if ($this->getApiVersion() == self::API_VERSION_OLD) {
+                    return array(
+                        'type' => 'add',
+                        'id' => $id,
+                        'version' => time(),
+                        'lang' => 'en', // only language supported atm ?
+                        'fields' => $fields
+                    );
+                } else {
+                    return array(
+                        'type' => 'add',
+                        'id' => $id,
+                        'fields' => $fields
+                    );
+                }
                 break;
         }
     }
