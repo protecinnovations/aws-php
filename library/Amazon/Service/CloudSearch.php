@@ -82,7 +82,7 @@ class CloudSearch
         $this->addParameter('q', $query_string);
 
         $uri = sprintf(
-            '%s/%s/%s?%s'
+            '%s/%s/%s?%s',
             $this->getSearchEndpoint(),
             $this->getApiVersion(),
             $this->getSearchPath(),
@@ -99,7 +99,7 @@ class CloudSearch
         $this->addParameter('bq', $query_string);
 
         $uri = sprintf(
-            '%s/%s/%s?%s'
+            '%s/%s/%s?%s',
             $this->getSearchEndpoint(),
             $this->getApiVersion(),
             $this->getSearchPath(),
