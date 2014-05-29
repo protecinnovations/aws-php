@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="phase4-2" default="test" basedir=".">
+    <target name="test" depends="janky"></target>
+    <target name="janky">
+        <exec checkreturn="true" passthru="true" command="./vendor/bin/phpunit -c phpunit.xml" />
+    </target>
+</project>
