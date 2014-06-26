@@ -96,7 +96,16 @@ class CloudSearch
 
     public function booleanSearch($query_string)
     {
-        $this->addParameter('bq', $query_string);
+        switch ($this->getApiVersion()) {
+            case self::API_VERSION_OLD:
+                $this->addParameter('bq', $query_string);
+            break;
+
+            case self::API_VERSION_NEW:
+                $this->addParameter('q.parser', 'structured');
+                $this->addParameter('q', $query_string);
+            break;
+        }
 
         $uri = sprintf(
             '%s/%s/%s?%s',
