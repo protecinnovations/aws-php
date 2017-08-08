@@ -188,19 +188,19 @@ class SES implements AuthenticatedInterface, SESInterface
 
         if ($message->hasSubject())
         {
-            $this->request->addParameter('Message.Subject.Data', $message->getSubject());
+            $this->request->addParameter('Message.Subject.Data', urlencode($message->getSubject()));
             $this->request->addParameter('Message.Subject.Charset', $message->getCharsetSubject());
         }
 
         if ($message->hasBodyText())
         {
-            $this->request->addParameter('Message.Body.Text.Data', $message->getBodyText());
+            $this->request->addParameter('Message.Body.Text.Data', urlencode($message->getBodyText()));
             $this->request->addParameter('Message.Body.Text.Charset', $message->getCharsetBodyText());
         }
 
         if ($message->hasBodyHtml())
         {
-            $this->request->addParameter('Message.Body.Html.Data', $message->getBodyHtml());
+            $this->request->addParameter('Message.Body.Html.Data', urlencode($message->getBodyHtml()));
             $this->request->addParameter('Message.Body.Html.Charset', $message->getCharsetBodyHtml());
         }
 
