@@ -157,7 +157,7 @@ class SES implements \Amazon\AuthenticatedInterface
 
         if ($message->hasSubject())
         {
-            $this->request->addParameter('Message.Subject.Data', $message->getSubject());
+            $this->request->addParameter('Message.Subject.Data', urlencode($message->getSubject()));
             $this->request->addParameter('Message.Subject.Charset', $message->getCharsetSubject());
         }
 
@@ -169,7 +169,7 @@ class SES implements \Amazon\AuthenticatedInterface
 
         if ($message->hasBodyHtml())
         {
-            $this->request->addParameter('Message.Body.Html.Data', $message->getBodyHtml());
+            $this->request->addParameter('Message.Body.Html.Data', urlencode($message->getBodyHtml()));
             $this->request->addParameter('Message.Body.Html.Charset', $message->getCharsetBodyHtml());
         }
 
